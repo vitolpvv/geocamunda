@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_19y1mqv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.0">
+  <bpmn:process id="address-geo" name="Addres Geo" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Address Geo start">
+      <bpmn:outgoing>SequenceFlow_1d817tn</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1d817tn" sourceRef="StartEvent_1" targetRef="Task_04vh9aq" />
+    <bpmn:userTask id="Task_04vh9aq" name="Enter Address">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="address" label="Address" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1d817tn</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0w1s7a6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_000j7iz" name="Address Geo completed">
+      <bpmn:incoming>SequenceFlow_159ibfw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0w1s7a6" sourceRef="Task_04vh9aq" targetRef="Task_163q902" />
+    <bpmn:sequenceFlow id="SequenceFlow_1rk6p53" sourceRef="Task_163q902" targetRef="Task_1roekvj" />
+    <bpmn:serviceTask id="Task_163q902" name="Process Address Geo" camunda:class="p.vitaly.geocamunda.delegate.DaDataProxyAddressGeoDelegate">
+      <bpmn:incoming>SequenceFlow_0w1s7a6</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1rk6p53</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_159ibfw" sourceRef="Task_1roekvj" targetRef="EndEvent_000j7iz" />
+    <bpmn:userTask id="Task_1roekvj" name="Show Geo">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="latitude" label="Latitude" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="longitude" label="Longitude" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1rk6p53</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_159ibfw</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmn:error id="Error_0d544ly" name="Request Error" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="address-geo">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="103" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="153" y="146" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1d817tn_di" bpmnElement="SequenceFlow_1d817tn">
+        <di:waypoint x="215" y="121" />
+        <di:waypoint x="265" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1wuinvx_di" bpmnElement="Task_04vh9aq">
+        <dc:Bounds x="265" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_000j7iz_di" bpmnElement="EndEvent_000j7iz">
+        <dc:Bounds x="702" y="103" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="688" y="146" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0w1s7a6_di" bpmnElement="SequenceFlow_0w1s7a6">
+        <di:waypoint x="365" y="121" />
+        <di:waypoint x="412" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1rk6p53_di" bpmnElement="SequenceFlow_1rk6p53">
+        <di:waypoint x="512" y="121" />
+        <di:waypoint x="553" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0vxz6uc_di" bpmnElement="Task_163q902">
+        <dc:Bounds x="412" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_159ibfw_di" bpmnElement="SequenceFlow_159ibfw">
+        <di:waypoint x="653" y="121" />
+        <di:waypoint x="702" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_05m5pua_di" bpmnElement="Task_1roekvj">
+        <dc:Bounds x="553" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
